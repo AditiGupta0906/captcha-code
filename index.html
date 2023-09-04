@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURVEY FORM </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <H2 data-text="CODE-ALPHA (TASK-1)">CODE-ALPHA (TASK-2)</H2>
+    <div class="contaner">
+        <!-- to saperate these form we add a id in every form tag-->
+        <form id="form1">
+            <h3> PERSONAL INFO </h3>
+            <input type="text" placeholder="FULL NAME" required><br>
+            <!--- <H4> GENDER</H4> --->
+
+            <select id="GENDER">
+                <option value="apple">Male</option>
+                <option value="banana">Female</option>
+                <option value="orange">Other</option>
+            </select> <span> gender</span><br>
+            <input type="date" placeholder="DOB" required>
+            <div class="btn_box">
+                <button type="button" id="next1"> Next</button>
+                <!--- id add for click event-->
+            </div>
+        </form>
+
+        <form id="form2">
+            <h3> ADDRESS DETAILS </h3>
+            <input type="text" placeholder=" ADDRESS" required>
+            <input type="text" placeholder="CITY" required>
+            <input type="text" placeholder="STATE" required>
+            <div class="btn_box">
+                <button type="button " id="back1"> Back</button>
+                <button type="button " id="next2"> Next</button>
+            </div>
+        </form>
+
+        <form id="form3">
+            <h3> CONTACT DETAILS </h3>
+            <input type="text" placeholder="Email" required>
+            <input type="text" placeholder="PHONE NO." required>
+            <div class="captcha">
+                <span id="captchaText"></span>
+                <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+                <!--- <button onclick="validateCaptcha()" class="bt">Okay</button>--->
+                <img src="okay3.jpg" onclick="validateCaptcha()" width="25px" height="25px">
+            </div>
+            <p id="captchaMessage"></p>
+            <div class="btn_box">
+                <button type="button" id="back2"> Back</button>
+                <button type="button" id="submit"> Submit </button>
+            </div>
+        </form>
+
+        <form id="form4">
+            <h3> Your Info Has Been Successfully Submitted !!</h3>
+            <h3> Press Okay For Refresh The Page</h3>
+            <div class="btn_box">
+                <button type="submit">OKAY </button>
+            </div>
+        </form>
+
+        <div class="step-row">
+            <div id="progress"></div>
+            <div class="step-col"><small>step1</small></div>
+            <div class="step-col"><small>step2</small></div>
+            <div class="step-col"><small>step3</small></div>
+            <div class="step-col"><small>step4</small></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var form1 = document.getElementById("form1");
+        var form2 = document.getElementById("form2");
+        var form3 = document.getElementById("form3");
+
+        var next1 = document.getElementById("next1");
+        var next2 = document.getElementById("next2");
+        var back1 = document.getElementById("back1");
+        var back2 = document.getElementById("back2");
+
+        var submit = document.getElementById("submit");
+        var progress = document.getElementById("progress");
+
+        next1.onclick = function () {
+            form1.style.left = "-450px";
+            form2.style.left = "40px";
+            progress.style.width = "180px";
+        }
+
+        back1.onclick = function () {
+            form1.style.left = "40px";
+            form2.style.left = "450px";
+            progress.style.width = "90px";
+        }
+
+        next2.onclick = function () {
+            form2.style.left = "-450px";
+            form3.style.left = "40px";
+            progress.style.width = "270px";
+        }
+
+        back2.onclick = function () {
+            form2.style.left = "40px";
+            form3.style.left = "450px";
+            progress.style.width = "180px";
+        }
+
+       submit.onclick = function () {
+               form3.style.left = "-450px";
+               form4.style.left = "40px";
+               progress.style.width = "360px";
+       }
+        // Generate a random CAPTCHA string
+        function generateCaptcha() {
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let captcha = "";
+            for (let i = 0; i < 6; i++) {
+                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return captcha;
+        }
+
+        // Initialize CAPTCHA
+        function initCaptcha() {
+            const captchaText = document.getElementById("captchaText");
+            const captchaInput = document.getElementById("captchaInput");
+            const captchaMessage = document.getElementById("captchaMessage");
+
+            // Generate a random CAPTCHA string and display it
+            const captchaValue = generateCaptcha();
+            captchaText.textContent = captchaValue;
+
+            // Clear input field and message
+            captchaInput.value = "";
+            captchaMessage.textContent = "";
+        }
+
+        // Validate CAPTCHA
+        function validateCaptcha() {
+            const captchaText = document.getElementById("captchaText");
+            const captchaInput = document.getElementById("captchaInput");
+            const captchaMessage = document.getElementById("captchaMessage");
+
+            const captchaValue = captchaText.textContent;
+            const userInput = captchaInput.value.trim();
+
+            if (userInput === captchaValue) {
+                captchaMessage.textContent = "CAPTCHA is correct!";
+                captchaMessage.style.color = "green";
+                // You can proceed with your form submission or other actions here.
+            } else {
+                captchaMessage.textContent = "CAPTCHA is incorrect. Please try again.";
+                captchaMessage.style.color = "red";
+                // You may want to regenerate a new CAPTCHA here.
+                initCaptcha();
+            }
+        }
+        
+        // Initialize CAPTCHA when the page loads
+        window.onload = initCaptcha;
+
+
+    </script>
+</body>
+
+</html>
